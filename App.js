@@ -46,7 +46,7 @@ export default function App() {
 					/>
        			 </View> 
 			</View>
-			<View>
+			<View style={styles.contactList}>
 				<FlatList 
 					data={contacts}
 					renderItem={
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
 		marginBottom: 5
 	},
 	button: {
-		width: '60%',
+		width: '240px',
 		marginBottom: 20,
 	},
 	textInput: {
@@ -89,6 +89,9 @@ const styles = StyleSheet.create({
 		borderWidth: 1,
 		borderColor: '#DDD',
 	},
+	contactList: {
+		alignItems: 'center'
+	},
 	contactView: {
 		borderColor: '#DDD',
 		borderWidth: 1,
@@ -96,6 +99,7 @@ const styles = StyleSheet.create({
 		marginRight: 15,
 		marginTop: 5,
 		padding: 5,
+		width: '240px',
 	},
 	contactItem: {
 	}
