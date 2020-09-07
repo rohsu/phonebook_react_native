@@ -1,64 +1,42 @@
 import React, {useState} from 'react';
 import { StyleSheet, Text, View, TextInput, Button, FlatList } from 'react-native';
+import ContactInput from './components/ContactInput';
+import ContactItem from './components/ContactItem';
 
 export default function App() {
-	const [contactName, setContactName] = useState('');
-	const [contactNumber, setContactNumber] = useState('');
 	const [contacts, setContacts] = useState([]);
 	const [countContacts, setCountContacts] = useState(10);
 
-	const nameText = 'Name';
-	const getContactName = (contactName) => {
-		setContactName(contactName);
-	}
-
-	const getContactNumber = (contactNumber) => {
-		setContactNumber(contactNumber);
-	}
-
-	const addContact = () => {
+	const addContact = (contactName, contactNumber) => {
 		setContacts(contacts => {
 			setCountContacts(countContacts + 2);
 			return [...contacts, {key: countContacts.toString(), name: contactName, number: contactNumber}]
 		})
+		console.log(contacts);
+	}
+
+	const removeContact = (keyToRemove) => {
+		setContacts(contacts.filter((contact) => {
+			return (contact.key != keyToRemove)
+		}))
+		console.log(contacts);
+
 	}
 
 	return (
 		<View>
-			<View style={styles.container}>
-				<Text style={styles.title}>Phone Book</Text>
-				<TextInput
-					placeholder="Contact Name"
-					style={styles.textInput}
-					onChangeText={getContactName}
-					value={contactName}
-				/>
-				<TextInput
-					placeholder="Number"
-					style={styles.textInput}
-					onChangeText={getContactNumber}
-					value={contactNumber}
-				/>
-				<View style={styles.button}>
-					<Button 
-						title='New Contact'
-						onPress={addContact}
-					/>
-       			 </View> 
-			</View>
-			<View style={styles.contactList}>
-				<FlatList 
+			<ContactInput onAddContact={addContact}/>
+			<View>
+				<FlatList style={styles.contactList}
 					data={contacts}
 					renderItem={
 						(contact) => (
-							<View style={styles.contactView}>
-								<View style={styles.contactItem}>
-								<Text key={contact.item.key}> Name: {contact.item.name} </Text>
-								</View>
-								<View style={styles.contactItem}>
-									<Text key={contact.item.key}> Number: {contact.item.number} </Text>
-								</View>
-							</View>
+							<ContactItem 
+								contactName={contact.item.name}
+								contactNumber={contact.item.number}
+								contactKey={contact.item.key}
+								removeOnClick={() => {removeContact(contact.item.key)}}
+							/>
 						)
 					}
 				/>
@@ -68,39 +46,7 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: '#fff',
-		alignItems: 'center',
-		marginTop: 10,
-	},
-	title: {
-		fontSize: 20,
-		padding: 5,
-		marginBottom: 5
-	},
-	button: {
-		width: '240px',
-		marginBottom: 20,
-	},
-	textInput: {
-		padding: 8,
-		marginBottom: 5,
-		borderWidth: 1,
-		borderColor: '#DDD',
-	},
 	contactList: {
-		alignItems: 'center'
+		minWidth:'100%',
 	},
-	contactView: {
-		borderColor: '#DDD',
-		borderWidth: 1,
-		marginLeft: 15,
-		marginRight: 15,
-		marginTop: 5,
-		padding: 5,
-		width: '240px',
-	},
-	contactItem: {
-	}
 });
