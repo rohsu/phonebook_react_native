@@ -1,17 +1,28 @@
 import React, {useState} from 'react';
 import {View, Text, TextInput, Button, StyleSheet} from 'react-native';
+import { useDispatch } from 'react-redux';
+import * as contactActions from '../store/contact-actions';
 
 const ContactInput = (props) => {
     const [contactName, setContactName] = useState('');
     const [contactNumber, setContactNumber] = useState('');
     
+    const dispatch = useDispatch();
+
     const getContactName = (contactName) => {
 		setContactName(contactName);
 	}
 
 	const getContactNumber = (contactNumber) => {
 		setContactNumber(contactNumber);
-	}
+    }
+    
+    const addContact = () => {
+        dispatch(contactActions.addContact(contactName, contactNumber));
+		setContactName('');
+		setContactNumber('');
+        props.navigation.goBack();
+    }
 
     return (
         <View style={styles.container}>
@@ -32,7 +43,7 @@ const ContactInput = (props) => {
             <View style={styles.button}>
                 <Button 
                     title='New Contact'
-                    onPress={() => {props.onAddContact(contactName, contactNumber)}}
+                    onPress={addContact}
                 />
             </View> 
         </View> 
@@ -43,7 +54,6 @@ const styles = StyleSheet.create({
     container: {
 		backgroundColor: '#ffffff',
 		alignItems: 'center',
-		marginTop: 50,
 	},
 	title: {
 		fontSize: 20,
