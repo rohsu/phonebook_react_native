@@ -10,7 +10,7 @@ import {
 import ContactInput from '../components/ContactInput';
 
 const NewContactView = (props) => {
-	{console.log(props.navigation.state.params.addContact)}
+	// {console.log(props.navigation.state.params.addContact)}
     return (
 		<ScrollView>
 			<View style={styles.form}>
