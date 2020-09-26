@@ -11,7 +11,8 @@ export default (state = initialState, action) => {
             const contact = new Contact(
                 new Date().toString(),
                 action.contactData.name,
-                action.contactData.number
+                action.contactData.number,
+                action.contactData.image
             );
 
             return {

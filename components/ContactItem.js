@@ -1,18 +1,26 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 
 const ContactItem = (props) => {
     return (
-        <View style={styles.contactView}>
-            <TouchableOpacity onLongPress={props.removeOnClick}>
-                <View style={styles.contactItem}>
-                    <Text key={props.contactKey}><Text style={{ fontWeight: 'bold' }}>Name:</Text> {props.contactName} </Text>
+        <TouchableOpacity onLongPress={props.removeOnClick}>
+            <View style={styles.contactView}>
+                <View>
+                    <Image
+                        style={styles.image}
+                        source={{uri: props.contactImage}}
+                    />
                 </View>
                 <View style={styles.contactItem}>
-                    <Text key={props.contactKey}><Text style={{ fontWeight: 'bold' }}>Number:</Text> {props.contactNumber} </Text>
+                    <View>
+                        <Text style={styles.contactName} key={props.contactKey}> {props.contactName} </Text>
+                    </View>
+                    <View style={styles.contactNumber}>
+                        <Text style={styles.contactNumber} key={props.contactKey}> {props.contactNumber} </Text>
+                    </View>
                 </View>
-            </TouchableOpacity>
-        </View>
+            </View>
+        </TouchableOpacity>
     );
 }
 
@@ -24,10 +32,25 @@ const styles = StyleSheet.create({
         marginRight: 15,
         marginTop: 5,
         padding: 5,
+        flexDirection: 'row'
+    },
+    image: {
+        width: 50,
+        height: 50,
+        borderRadius: '50%'
     },
     contactItem: {
-        minWidth: '100%',
+        padding: 10
+    },
+    contactName: {
+       fontSize: 18,
+       fontWeight: 'bold'
+    },
+    contactNumber: {
+       fontSize: 14
     }
+    
+   
 })
 
 export default ContactItem;

@@ -38,6 +38,7 @@ const ContactListView = (props) => {
 							<ContactItem 
 								contactName={contact.item.name}
 								contactNumber={contact.item.number}
+								contactImage={contact.item.image}
 								contactKey={contact.item.id}
 								removeOnClick={() => {removeContact(contact.item.key)}}
 							/>

@@ -2,10 +2,13 @@ import React, {useState} from 'react';
 import {View, Text, TextInput, Button, StyleSheet} from 'react-native';
 import { useDispatch } from 'react-redux';
 import * as contactActions from '../store/contact-actions';
+import * as ImagePicker from 'expo-image-picker'
+import SelectGalleryImage from './SelectGalleryImage';
 
 const ContactInput = (props) => {
     const [contactName, setContactName] = useState('');
     const [contactNumber, setContactNumber] = useState('');
+    const [contactImageURI, setContactImageURI] = useState();
     
     const dispatch = useDispatch();
 
@@ -18,7 +21,7 @@ const ContactInput = (props) => {
     }
     
     const addContact = () => {
-        dispatch(contactActions.addContact(contactName, contactNumber));
+        dispatch(contactActions.addContact(contactName, contactNumber, contactImageURI));
 		setContactName('');
 		setContactNumber('');
         props.navigation.goBack();
@@ -40,6 +43,7 @@ const ContactInput = (props) => {
                 value={contactNumber}
                 keyboardType="number-pad"
             />
+            <SelectGalleryImage onSelectedImage={setContactImageURI}/>
             <View style={styles.button}>
                 <Button 
                     title='New Contact'
