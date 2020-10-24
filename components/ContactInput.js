@@ -4,12 +4,32 @@ import { useDispatch } from 'react-redux';
 import * as contactActions from '../store/contact-actions';
 import * as ImagePicker from 'expo-image-picker'
 import SelectGalleryImage from './SelectGalleryImage';
+// import GetLocation from '../components/GetLocation';
+import * as Location from 'expo-location';
+import * as Permissions from 'expo-permissions'
 
 const ContactInput = (props) => {
     const [contactName, setContactName] = useState('');
     const [contactNumber, setContactNumber] = useState('');
     const [contactImageURI, setContactImageURI] = useState();
-    
+    const [contactLatitude, setContactLatitude] = useState();
+    const [contactLongitude, setContactLongitude] = useState();
+
+    const getLocation = async () => {
+        const {status} = await Permissions.askAsync(Permissions.LOCATION);
+        if(status !== 'granted') {
+            Alert.alert(
+                "Sem permissão para uso do mecanismo de localização",
+                "É preciso liberar acesso ao mecanismo de localização",
+                [{text: 'OK'}] //{text: 'OK', onPress: () => {}}
+            );  
+        }
+
+        const position = await Location.getCurrentPositionAsync({timeout: 5000});
+        const {latitude, longitude} = position.coords;
+        setContactLatitude(latitude);
+        setContactLongitude(longitude);
+    }
     const dispatch = useDispatch();
 
     const getContactName = (contactName) => {
@@ -21,12 +41,13 @@ const ContactInput = (props) => {
     }
     
     const addContact = () => {
-        dispatch(contactActions.addContact(contactName, contactNumber, contactImageURI));
+        dispatch(contactActions.addContact(contactName, contactNumber, contactImageURI, contactLatitude, contactLongitude));
 		setContactName('');
 		setContactNumber('');
         props.navigation.goBack();
     }
 
+    getLocation();
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Phone Book</Text>

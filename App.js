@@ -8,6 +8,15 @@ import {
 import { Provider } from 'react-redux';
 import reduxThunk from 'redux-thunk';
 import contactReducer from './store/contact-reducers';
+import { init } from './helpers/db';
+
+init()
+.then(() => {
+	console.log('Connection database ok!');
+}).catch((err) => {
+	console.log(`Erro: ${err}`);
+	throw err;
+})
 
 const rootReducer = combineReducers({
 	contacts: contactReducer

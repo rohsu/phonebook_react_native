@@ -18,7 +18,6 @@ const SelectGalleryImage = (props) => {
             aspect: [16, 9],
             quality: 1,
         });
-        console.log(result);
         setImageURI(result.uri);
         props.onSelectedImage(result.uri);
     }
@@ -61,12 +60,12 @@ const styles = StyleSheet.create({
         marginBottom: 12,
         borderColor: '#CCC',
         borderWidth: 1,
-        borderRadius: '50%'
+        // borderRadius: '50%'
     },
     image: {
         width: '100%',
         height: '100%',
-        borderRadius: '50%'
+        // borderRadius: '50%'
     }
 });
 

@@ -15,7 +15,7 @@ const ContactItem = (props) => {
                     <View>
                         <Text style={styles.contactName} key={props.contactKey}> {props.contactName} </Text>
                     </View>
-                    <View style={styles.contactNumber}>
+                    <View>
                         <Text style={styles.contactNumber} key={props.contactKey}> {props.contactNumber} </Text>
                     </View>
                 </View>
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     image: {
         width: 50,
         height: 50,
-        borderRadius: '50%'
+        borderRadius: 50
     },
     contactItem: {
         padding: 10

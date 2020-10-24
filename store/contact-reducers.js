@@ -1,4 +1,4 @@
-import { ADD_CONTACT } from './contact-actions';
+import { ADD_CONTACT, LIST_CONTACT} from './contact-actions';
 import Contact from '../models/Contact';
 
 const initialState = {
@@ -12,12 +12,30 @@ export default (state = initialState, action) => {
                 new Date().toString(),
                 action.contactData.name,
                 action.contactData.number,
-                action.contactData.image
+                action.contactData.image,
+                action.contactData.latitude,
+                action.contactData.longitude,
             );
 
             return {
-                contacts: [...state.contacts, contact]
+                contacts: state.contacts.concat(contact)
+            }    
+
+        case LIST_CONTACT: 
+        // console.log( action.contacts)
+        
+            return {
+                contacts: action.contacts.map(contact => 
+                    new Contact(
+                        contact.id.toString(), 
+                        contact.name, 
+                        contact.image, 
+                        contact.latitude, 
+                        contact.longitude
+                    )
+                )
             }        
+
         default: 
             return state;
     }

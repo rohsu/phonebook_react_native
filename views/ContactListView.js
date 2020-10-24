@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect} from 'react';
 import {
     View,
     Text,
@@ -9,22 +9,20 @@ import {
 
 import ContactItem from '../components/ContactItem';
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
 import ContactHeaderButton from '../components/ContactHeaderButton';
 
-const ContactListView = (props) => {
-    // const [contacts, setContacts] = useState([]);
-    // const [countContacts, setCountContacts] = useState(10);
+import * as contactActions from '../store/contact-actions';
 
-    // const removeContact = (keyToRemove) => {
-    //     setContacts(contacts.filter((contact) => {
-    //         return (contact.key != keyToRemove)
-    //     }))
-    //     console.log(contacts);
-    // }
+
+const ContactListView = (props) => {
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(contactActions.listContacts())
+    });
 
     const contacts = useSelector(state => state.contacts.contacts) 
 
@@ -32,7 +30,8 @@ const ContactListView = (props) => {
         <View>
 			<View>
 				<FlatList style={styles.contactList}
-					data={contacts}
+                    data={contacts}
+                    keyExtractor={contact => contact.id}
 					renderItem={
 						(contact) => (
 							<ContactItem 
